@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mymap/cubit/cubit.dart';
 import 'package:mymap/cubit/states.dart';
-import 'components/components.dart';
+import 'package:mymap/modules/providerScreen.dart';
+import '../components/components.dart';
 
-class MapScreen extends StatelessWidget {
+class MapScreen extends StatelessWidget
+{
+  var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LocationCubit, LocationStates>(
@@ -16,8 +19,42 @@ class MapScreen extends StatelessWidget {
         double mediaHeight=MediaQuery.of(context).size.height;
         double mediaWidth=MediaQuery.of(context).size.height;
 
-        return Scaffold(
-
+        return Scaffold(key:scaffoldKey ,
+          drawer: Drawer(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                UserAccountsDrawerHeader(
+                    decoration: BoxDecoration(color: Colors.teal),
+                    accountName: Text('admin'),
+                    accountEmail: Text('admin@gmail.com'),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundColor: Colors.pink,
+                      child: Text(
+                        'A',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white),
+                      ),
+                    )),
+                buildDrawerItem(
+                    cubit.screensByDrawer, cubit.drawerIcons, context),
+                Center(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProviderScreen()));
+                      },
+                      style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all(Colors.teal)),
+                      child: Text('Provider mode')),
+                )
+              ],
+            )),
           body: Stack(
             alignment: AlignmentDirectional.topCenter,
             children: [
@@ -57,7 +94,7 @@ class MapScreen extends StatelessWidget {
                     SizedBox(height: mediaHeight*0.5,),
                     InkWell(onTap: ()async
                     {
-                      cubit.getPosition();
+                      cubit.getPermission();
                       cubit.getLatAndLong();
                     },
                         child: const CircleAvatar(backgroundColor: Colors.teal,

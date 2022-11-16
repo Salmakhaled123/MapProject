@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mymap/cubit/cubit.dart';
 import 'package:mymap/cubit/states.dart';
 import 'cubit/bloc_observer.dart';
-import 'mapScreen.dart';
+import 'modules/mapScreen.dart';
 
 void main() {
   Bloc.observer = MyBlocObserver();

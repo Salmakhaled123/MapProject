@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -9,7 +10,7 @@ class LocationCubit extends Cubit<LocationStates> {
  static LocationCubit get(context) => BlocProvider.of(context);
 GoogleMapController ?mapController;
 
- Future getPosition() async
+ Future getPermission() async
  {
   bool services;
   LocationPermission locationPermission;
@@ -47,5 +48,17 @@ GoogleMapController ?mapController;
    emit(GetCurrentLocationError(error.toString()));
   });
  }
+ List <String> screensByDrawer=
+ [
+  'Home page',
+  'Settings',
+  'Language',
+ ];
+ List<IconData> drawerIcons=
+ [
+  Icons.home,
+  Icons.miscellaneous_services,
+  Icons.language,
+ ];
 
 }
